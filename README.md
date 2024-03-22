@@ -1,5 +1,9 @@
 # cpsc340_project3
-## Insert
+## Work Division
+Jayden: Print & Files
+Matt: Insert & Classes
+
+## Cases
 ### Case 1: null tree 
 Tree has null root
 
