@@ -6,7 +6,8 @@ public class DNAtree {
     DNAtree(){
         head=new Node(0);
     }
-
+    
+    //insert by Matt
     //returns level of insertion, if duplicate returns -1
     Integer insert(Node root,String sequence,Integer level){
         if (sequence.equals(root.getSequence())){
