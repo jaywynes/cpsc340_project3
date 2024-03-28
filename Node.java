@@ -33,11 +33,15 @@ public class Node {
         return level;
     }
 
-    //changes a leaf node to an internal node
-    void setLeaf(){
+    //changes a leaf node to an internal node and returns the sequence
+    String setInternal(){
         isLeaf=false;
         //internal nodes have a null level
         level=null;
+        //return sequence
+        String temp=sequence;
+        sequence=null;
+        return temp;
     }
     
     //sets the proper child to Node n
@@ -48,5 +52,13 @@ public class Node {
         }
         //sets proper child to Node n
         children[pos]=n;
+    }
+    
+    //if children is null, initializes children array
+    Node getChild(Integer pos){
+        if (children==null){
+            children=new Node[5];
+        }
+        return children[pos];
     }
 }
