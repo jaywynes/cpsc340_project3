@@ -32,16 +32,17 @@ public class DNAtree {
 
     /**
      * Method reads in the data from each file
+     * @author Jayden W
      */
     public void readFile() {
         while (scan.hasNext()) {
             String token = scan.next();
-            System.out.println("Token:" + token);
+            // System.out.println("Token:" + token);
             if (token.equals("insert")) {
                 token = scan.next();
-                //insert(token);
+                insert(head, token, 0);
             } else if (token.equals("print")) {
-                print();
+                System.out.println("tree dump: \n" + print(head));
             }
         }
 
@@ -49,9 +50,20 @@ public class DNAtree {
 
     /**
      * Method prints the contents of the tree
+     * @author Jayden W
      */
-    public void print() {
-        System.err.println("Urg");
+    public String print(Node root) {
+        if (root == null) {
+            return ("E");
+        } else if (root.isLeaf()) {
+            return root.getSequence();
+        } else {
+            String s = "I\n";
+            for (int i = 0; i < 5; i++) {
+                s+= "  " + print(root.getChild(i)) + "\n";
+            }
+            return s;
+        }
     }
 
     /**
