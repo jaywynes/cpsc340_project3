@@ -12,6 +12,8 @@ public class DNAtree {
     //new DNAtrees have 1 node with level 0
     DNAtree(){
         head=new Node(0);
+        file=null;
+        scan=null;
     }
 
     /**
@@ -85,8 +87,13 @@ public class DNAtree {
             return root.getLevel();
         }
         //recursive case
+        //if child is null, make a new child
+        if (root.getChild(findChild(sequence,level))==null){
+            root.setChild(new Node(level+1),findChild(sequence,level));
+        }
+        //call insert on appropriate child
         Integer temp=insert(root.getChild(findChild(sequence,level)),
-                sequence,level);
+                sequence,level+1);
         //update current node
         if (root.isLeaf()){
             insert(head,root.setInternal(),0);
@@ -130,6 +137,6 @@ public class DNAtree {
         if (!result) {
             System.err.println("Error, invalid file");
         }
-        tree.readFile();
+        tree.readFile(); 
     }
 }
