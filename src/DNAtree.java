@@ -42,9 +42,14 @@ public class DNAtree {
             // System.out.println("Token:" + token);
             if (token.equals("insert")) {
                 token = scan.next();
-                insert(head, token, 0);
+                int result = insert(head, token, 0);
+                if (result >= 0) {
+                    System.out.println("Sequence " + token + " inserted at level " + result);
+                } else {
+                    System.out.println("Sequence " + token + " already exists");
+                }
             } else if (token.equals("print")) {
-                System.out.println("tree dump: \n" + print(head));
+                System.out.println("tree dump: \n" + print(head, 0));
             }
         }
 
@@ -54,15 +59,15 @@ public class DNAtree {
      * Method prints the contents of the tree
      * @author Jayden W
      */
-    public String print(Node root) {
+    public String print(Node root, int level) {
         if (root == null) {
-            return ("E");
+            return ("  ".repeat(level) + "E");
         } else if (root.isLeaf()) {
-            return root.getSequence();
+            return ("  ".repeat(level) + root.getSequence());
         } else {
-            String s = "I\n";
+            String s = "  ".repeat(level) + "I\n";
             for (int i = 0; i < 5; i++) {
-                s+= "  " + print(root.getChild(i)) + "\n";
+                s+= print(root.getChild(i), level + 1) + "\n";
             }
             return s;
         }
@@ -78,7 +83,7 @@ public class DNAtree {
      */
     //insert by Matt
     //returns level of insertion, if duplicate returns -1
-    Integer insert(Node root,String sequence,Integer level){
+    public int insert(Node root,String sequence,Integer level){
         if (sequence.equals(root.getSequence())){
             return -1;
         }
