@@ -44,12 +44,12 @@ public class DNAtree {
                 token = scan.next();
                 int result = insert(head, token, 0);
                 if (result >= 0) {
-                    System.out.println("Sequence " + token + " inserted at level " + result);
+                    System.out.println("sequence " + token + " inserted at level " + result);
                 } else {
                     System.out.println("Sequence " + token + " already exists");
                 }
             } else if (token.equals("print")) {
-                System.out.println("tree dump: \n" + print(head, 0));
+                System.out.println("tree dump:\n" + print(head, 0));
             }
         }
 
@@ -66,9 +66,11 @@ public class DNAtree {
             return ("  ".repeat(level) + root.getSequence());
         } else {
             String s = "  ".repeat(level) + "I\n";
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 4; i++) {
                 s+= print(root.getChild(i), level + 1) + "\n";
             }
+            //remove extra line on 5th child
+            s+= print(root.getChild(4), level + 1);
             return s;
         }
     }
@@ -96,13 +98,13 @@ public class DNAtree {
         if (root.getChild(findChild(sequence,level))==null){
             root.setChild(new Node(level+1),findChild(sequence,level));
         }
-        //call insert on appropriate child
-        Integer temp=insert(root.getChild(findChild(sequence,level)),
-                sequence,level+1);
         //update current node
         if (root.isLeaf()){
             insert(head,root.setInternal(),0);
         }
+        //call insert on appropriate child
+        Integer temp=insert(root.getChild(findChild(sequence,level)),
+                sequence,level+1);
         return temp;
     }
 
