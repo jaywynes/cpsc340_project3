@@ -154,12 +154,12 @@ public class DNAtree {
     public static void main(String args[]) {
         DNAtree tree = new DNAtree();
         if (args.length == 0 || args[0].trim().isEmpty()) {
-            // If there is no file inputted from the command line
+            // If there is no file inputted from the command line, should never happen
             System.err.println("No file inputted from command line");
         }
         boolean result = tree.validateFile(args[0]);
         if (!result) {
-            // If the filename was invalid
+            // If the filename was invalid, also should never happen
             System.err.println("Error, invalid file");
         }
         // Executing commands in file
