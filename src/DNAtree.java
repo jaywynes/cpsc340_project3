@@ -24,9 +24,11 @@ public class DNAtree {
      */
     public boolean validateFile(String filename) {
         try {
+            // Attempts to instantiate FileInputStream and Scanner
             file = new FileInputStream(filename);
             scan = new Scanner(file);
         } catch (FileNotFoundException e) {
+            // If file is invalid/can't properly setup a scanner on the file
             return false;
         }
         return true;
@@ -41,14 +43,18 @@ public class DNAtree {
             String token = scan.next();
             // System.out.println("Token:" + token);
             if (token.equals("insert")) {
+                // if next word is insert, takes next word (the DNA string) and inserts it
                 token = scan.next();
                 int result = insert(head, token, 0);
                 if (result >= 0) {
+                    // If the string was inserted at a level
                     System.out.println("sequence " + token + " inserted at level " + result);
                 } else {
+                    // If the string already exists, insert method return -1 in this case
                     System.out.println("Sequence " + token + " already exists");
                 }
             } else if (token.equals("print")) {
+                // Calls print on current tree
                 System.out.println("tree dump:\n" + print(head, 0));
             }
         }
@@ -57,19 +63,24 @@ public class DNAtree {
 
     /**
      * Method prints the contents of the tree
+     * "  ".repeat(level) prints out 2 spaces per level of tree
      * @author Jayden W
      */
     public String print(Node root, int level) {
         if (root == null) {
+            // empty leaf node
             return ("  ".repeat(level) + "E");
         } else if (root.isLeaf()) {
+            // Filled leaf node, prints sequence
             return ("  ".repeat(level) + root.getSequence());
         } else {
+            // Creates next branch of tree for internal node
             String s = "  ".repeat(level) + "I\n";
+            // Recursively calls print on each child to move down tree
             for (int i = 0; i < 4; i++) {
                 s+= print(root.getChild(i), level + 1) + "\n";
             }
-            //remove extra line on 5th child
+            // remove extra newline character on 5th child
             s+= print(root.getChild(4), level + 1);
             return s;
         }
@@ -135,15 +146,23 @@ public class DNAtree {
     }
 
 
+    /**
+     * Main function, takes in a filename from command line and tests its validity. If valid,
+     * it executes every command in the file through readFile() method
+     * @param args - Filename inserted from command line
+     */
     public static void main(String args[]) {
         DNAtree tree = new DNAtree();
         if (args.length == 0 || args[0].trim().isEmpty()) {
+            // If there is no file inputted from the command line
             System.err.println("No file inputted from command line");
         }
         boolean result = tree.validateFile(args[0]);
         if (!result) {
+            // If the filename was invalid
             System.err.println("Error, invalid file");
         }
+        // Executing commands in file
         tree.readFile(); 
     }
 }
